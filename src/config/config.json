@@ -1,0 +1,9 @@
+{
+    "bd": {
+        "servidor": "localhost",
+        "porta": 3306,
+        "banco": "quizcreator",
+        "usuario": "root",
+        "senha": ""
+    }
+}
