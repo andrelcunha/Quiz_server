@@ -5,9 +5,9 @@
             </div>
             <form id="formquiz" method="post" enctype="multipart/form-data">
                 <div class="form-group row">
-                    <div class="col-3">
+                    <div class="col-5">
                         <label for="codigo">Id</label>
-                        <input type="password" class="form-control sm-2" id="codigo" name="codigo" placeholder="REGISTRO NOVO" readonly="readonly" />
+                        <input type="text" class="form-control sm-2" id="codigo" name="codigo" placeholder="REGISTRO NOVO" readonly="readonly" />
                     </div>
                 </div>
                 <div class="form-group row">

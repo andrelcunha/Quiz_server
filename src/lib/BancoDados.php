@@ -27,6 +27,19 @@ class BancoDados
         return null;
     }
 
+    function executar($comando, &$erro)
+    {
+        $conexao = $this->conectar();
+        $resultado = $conexao->query($comando);
+
+        if ($conexao->errno)
+        {
+            $erro = $conexao->error;
+        }
+
+        return $resultado;
+    }
+
     function obterNovoUUID()
     {
         $uuid    = '';

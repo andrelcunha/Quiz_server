@@ -8,6 +8,10 @@ if (isset($_POST['dataini']))       $dataini    = $_POST['dataini'];        else
 if (isset($_POST['datafim']))       $datafim    = $_POST['datafim'];        else    $datafim    = '';
 if (isset($_POST['tentativas']))    $tentativas = $_POST['tentativas'];     else    $tentativas = 0;
 
+require_once('autoload.php');
+require_once('../constantes.php');
+
+
 $logo       = '';
 
 if (!empty($_FILES['logo']['type']))
@@ -36,21 +40,58 @@ $retorno    = '';
 if (count($erros) == 0)
 {
     $quiz   = new Quiz();
-    $gravou = FALSE;
+    
+    
+    $quiz->Nome = $nome;
+    //TODO  fazer quiz_cliente
+    $quiz->Status = new StatusQuiz();
+    $quiz->Status->SelecionarStatus(1);
+    $quiz->DataInicial = $dataini;
+    $quiz->DataFinal = $datafim;
+    $quiz->MaximoTentativas = $tentativas;
+    $quiz->Logotipo = $logo;
+    $quiz->Estilo = $estilo;
+    $quiz->PerguntasRandomicas = $random;
+    $quiz->AumentarDificuldadeProgressivamente = $aumdif;
+    $quiz->PontuacaoPadrao = $ptspad;
 
-    if ($id != '')
+    $gravou = FALSE;
+    $reterros = '*';
+
+    if ($id == '')
     {
-        $gravou = $quiz->Incluir();
+        $gravou = $quiz->Incluir($reterros);
     }
     else
     {
+        $quiz->Id = $id;
         $gravou = $quiz->Alterar();
     }
-
-    $retorno    = "{ \"resposta\": 200, " .
-                  "\"id\": \"$quiz->Id\", " .
-                  "\"status\": $quiz->Status->Nome, " .
-                  "\"valor\": $quiz->Status->Valor }";
+    if ($gravou)
+    {
+        $quiz_status_nome = $quiz->Status->Nome;
+        $quiz_status_val = $quiz->Status->Valor;
+        $myobj->resposta = 200;
+        $myobj->id = "$quiz->Id";
+        $myobj->status = "$quiz_status_nome";
+        $myobj->valor = $quiz_status_val;
+        /*
+        $retorno    = "{ \"resposta\": 200, " .
+            "\"id\": \"$quiz->Id\", " .
+            "\"status\": \"$quiz_status_nome\", " .
+            "\"valor\": $quiz_status_val }";
+            */
+        $retorno = json_encode($myobj);
+        
+    }
+    else
+    {
+        
+        $retorno    = "{ \"resposta\": 400, " .
+            "\"erros\": [ ".
+            "{ \"erro\": \"$reterros\" }] }";
+    }
+    
 }
 else
 {

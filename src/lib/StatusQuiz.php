@@ -46,6 +46,38 @@ class StatusQuiz
         }
     }
 
+    function SelecionarStatus($Id)
+    {
+        $sql    = 'SELECT   statusquiz_id, statusquiz_nome, statusquiz_rascunho, statusquiz_teste, statusquiz_publicado, ' .
+        'statusquiz_fechado, statusquiz_cancelado, statusquiz_aguardliberacao, statusquiz_nivelliberacao, ' .
+        'statusquiz_totalniveis, statusquiz_sequencia ' .
+        'FROM     status_quiz ' .
+        "WHERE    statusquiz_id  =  " . $Id ;
+
+        $bd         = new BancoDados();
+        $resultado  = $bd->selecionar($sql);
+                
+        if ($resultado != null)
+        {
+            
+            $registro = $resultado->fetch_object();
+
+            $this->Id                   = $registro->statusquiz_id;
+            $this->Nome                 = $registro->statusquiz_nome;            
+            $this->Rascunho             = $registro->statusquiz_rascunho;
+            $this->Teste                = $registro->statusquiz_teste;
+            $this->AguardandoLiberacao  = $registro->statusquiz_aguardliberacao;
+            $this->Publicado            = $registro->statusquiz_publicado;
+            $this->Fechado              = $registro->statusquiz_fechado;
+            $this->Cancelado            = $registro->statusquiz_cancelado;
+            $this->NivelLiberacao       = $registro->statusquiz_nivelliberacao;
+            $this->TotalNiveis          = $registro->statusquiz_totalniveis;
+            $this->Sequencia            = $registro->statusquiz_sequencia;
+            $this->Valor                = $this->CalcularValor();
+        }
+    }
+
+
     function CalcularValor()
     {
         $valor  = 0;

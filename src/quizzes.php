@@ -6,6 +6,12 @@ $csspersons     = array('geral.css');
 
 require('ui/header.php');
 require('ui/menutopo.php');
+$clientes = new Cliente();
+$clientesarr = $clientes->ListarBusca('','','');
+
+$quizzes = new Quiz();
+$quizzesarr = $quizzes->Listar();
+
 ?>
 <div class="conteudo">
     <h1>Cadastro de Quizzes</h1>
@@ -20,6 +26,12 @@ require('ui/menutopo.php');
                     <label for="clientes">Cliente:</label>
                     <select id="clientes" name="clientes" class="form-control">
                         <option>--- Todos os quizzes ---</option>
+                       <?php
+                       foreach ($clientesarr as $client)
+                       {
+                           echo("<option value=\"$client->Id\">$client->Nome</option>\n");
+                       }
+                       ?>
                     </select>
                 </div>
             </div>
@@ -47,11 +59,14 @@ require('ui/menutopo.php');
             </tr>
         </thead>
         <tbody>
+            <!--
             <tr>
                 <td colspan="4" class="text-center">
                     Ainda não há nenhum quiz cadastrado
                 </td>
             </tr>
+            -->
+            <
         </tbody>
     </table>
 </div>
