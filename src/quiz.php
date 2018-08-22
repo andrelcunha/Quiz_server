@@ -12,6 +12,15 @@ require_once('busca.php');
 //Carga de combos iniciais
 $tiporesposta   = new TipoResposta();
 $tpresparr      = $tiporesposta->Listar();
+//$quizzes   = new Quiz();
+if (isset($_GET['quiz_id']))
+{
+    $quiz_id = $_GET['quiz_id'];
+    $quiz = Quiz::Selecionar($quiz_id);
+    $cliente = new  Cliente();
+    $cliente->Selecionar($quiz->Cliente);
+}        
+
 ?>
 <div class="conteudo">
     <h1>Cadastro de Quiz</h1>

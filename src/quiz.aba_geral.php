@@ -7,13 +7,17 @@
                 <div class="form-group row">
                     <div class="col-5">
                         <label for="codigo">Id</label>
-                        <input type="text" class="form-control sm-2" id="codigo" name="codigo" placeholder="REGISTRO NOVO" readonly="readonly" />
+                        <input type="text" class="form-control sm-2" id="codigo" name="codigo" placeholder="REGISTRO NOVO" readonly="readonly" 
+                        <?php if ($quiz!=NULL) echo("value='$quiz->Id'");?>
+                        />
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-5">
                         <label for="nome">Nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome" />
+                        <input type="text" class="form-control" id="nome" name="nome" 
+                        <?php if ($quiz!=NULL) echo("value='$quiz->Nome'");?>
+                        />
                     </div>
                 </div>
                 <div class="form-group row">
@@ -21,7 +25,12 @@
                         <label for="nomecliente">Cliente</label>
                         <div class="row">
                             <div class="col-2 input-group">
-                                <input type="text" class="form-control" id="nomecliente" name="nomecliente" />
+                                <input type="text" class="form-control" id="nomecliente" name="nomecliente" 
+                                <?php                                 
+                                if ($cliente!=null) 
+                                    echo(" value= \"". $cliente->Nome . "\" ");                                    
+                                ?>
+                                />
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#divBuscarCliente">
                                         ...
@@ -37,8 +46,18 @@
                                 </div>
                             </div>
                             <div class="col-9">
-                                <input type="text" class="form-control" id="nomecompcliente" name="nomecompcliente" readonly="reaonly" />
-                                <input type="hidden" id="cliente" name="cliente" />
+                                <input type="text" class="form-control" id="nomecompcliente" name="nomecompcliente" readonly="reaonly" 
+                                <?php                                 
+                                if ($cliente!=NULL) 
+                                    echo("value='$cliente->Empresa - $cliente->Nome'");                                    
+                                ?>
+                                />
+                                <input type="hidden" id="cliente" name="cliente" 
+                                <?php                                 
+                                if ($cliente!=NULL) 
+                                    echo("value='$cliente->Id'");                                    
+                                ?>
+                                 />
                             </div>
                         </div>
                     </div>
@@ -46,17 +65,30 @@
                 <div class="form-group row">
                     <div class="col-2">
                         <label for="dataini">Data In&iacute;cial na Produ&ccedil;&atilde;o</label>
-                        <input type="date" class="form-control" id="dataini" name="dataini" />
+                        <input type="date" class="form-control" id="dataini" name="dataini" 
+                        <?php 
+                        if ($quiz!=NULL) {
+                            $date = date_format(date_create($quiz->DataInicial),'Y-m-d');                            
+                            echo("value='$date'");}?>
+                        />
                     </div>
                     <div class="col-2">
                         <label for="datafim">Data Final na Produ&ccedil;&atilde;o</label>
-                        <input type="date" class="form-control" id="datafim" name="datafim" />
+                        <input type="date" class="form-control" id="datafim" name="datafim" 
+                        <?php 
+                        if ($quiz!=NULL) {
+                            $date = date_format(date_create($quiz->DataFinal),'Y-m-d');                            
+                            echo("value='$date'");}?>
+                        />
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-2">
                         <label for="tentativas">Tentativas M&aacute;ximas</label>
-                        <input type="number" class="form-control" id="tentativas" name="tentativas" min="0" max="99999" value="0" />
+                        <input type="number" class="form-control" id="tentativas" name="tentativas" min="0" max="99999" 
+                        <?php if ($quiz!=NULL) echo("value=$quiz->MaximoTentativas");
+                        else  echo("value=0")?>
+                        />
                     </div>
                 </div>
                 <div class="form-group row">
@@ -81,7 +113,7 @@
                 <div class="form-group row">
                     <div class="col-10">
                         <label for="estilo">CSS ou Estilo</label>
-                        <textarea class="form-control" id="estilo" name="estilo"></textarea>
+                        <textarea class="form-control" id="estilo" name="estilo"><?php if ($quiz!=NULL) echo($quiz->Estilo);?></textarea>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -89,10 +121,14 @@
                         <label for="pergrandom">As Perguntas Deste Quiz</label>
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-secondary active">
-                                <input type="radio" name="options" id="aleatoria" name="pergrandom" autocomplete="off" value="1" checked /> São Aleatórias
+                                <input type="radio" name="options" id="aleatoria" name="pergrandom" autocomplete="off" value="1" 
+                                <?php if ($quiz->PerguntasRandomicas) echo(" checked ");?>                                
+                                 /> São Aleatórias
                             </label>
                             <label class="btn btn-secondary">
-                                <input type="radio" name="options" id="sequencial" name="pergrandom" autocomplete="off" value="0" /> São Sequenciais
+                                <input type="radio" name="options" id="sequencial" name="pergrandom" autocomplete="off" value="0"
+                                <?php if (!$quiz->PerguntasRandomicas) echo(" checked ");?>
+                                /> São Sequenciais
                             </label>
                         </div>
                     </div>
@@ -103,10 +139,14 @@
                         <br />
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-success">
-                                <input type="radio" name="options" id="aumsim" name="aumdif" autocomplete="off" value="1" /> Sim
+                                <input type="radio" name="options" id="aumsim" name="aumdif" autocomplete="off" value="1" 
+                                <?php if ($quiz->AumentarDificuldadeProgressivamente) echo(" checked ");?>                                
+                                /> Sim
                             </label>
                             <label class="btn btn-danger active">
-                                <input type="radio" name="options" id="aumnao" name="aumdif" autocomplete="off" value="0" checked /> Não
+                                <input type="radio" name="options" id="aumnao" name="aumdif" autocomplete="off" value="0" 
+                                <?php if (!$quiz->AumentarDificuldadeProgressivamente) echo(" checked ");?>                                
+                                /> Não
                             </label>
                         </div>
                     </div>
@@ -114,7 +154,10 @@
                 <div class="form-group row">
                     <div class="col-2">
                         <label for="pontospadrao">Pontuação Padrão das Perguntas</label>
-                        <input type="number" class="form-control" id="pontospadrao" name="pontospadrao" min="0" max="999999" value="0" />
+                        <input type="number" class="form-control" id="pontospadrao" name="pontospadrao" min="0" max="999999" 
+                        <?php if ($quiz!=NULL) echo("value=$quiz->PontuacaoPadrao");
+                        else  echo("value=0")?>
+                        />
                     </div>
                 </div>
                 <div class="form-group row">

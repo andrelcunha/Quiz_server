@@ -43,9 +43,8 @@ if (count($erros) == 0)
     
     
     $quiz->Nome = $nome;
-    //TODO  fazer quiz_cliente
-    $quiz->Status = new StatusQuiz();
-    $quiz->Status->SelecionarStatus(1);
+    //$quiz->Cliente = $cliente;
+    
     $quiz->DataInicial = $dataini;
     $quiz->DataFinal = $datafim;
     $quiz->MaximoTentativas = $tentativas;
@@ -54,44 +53,75 @@ if (count($erros) == 0)
     $quiz->PerguntasRandomicas = $random;
     $quiz->AumentarDificuldadeProgressivamente = $aumdif;
     $quiz->PontuacaoPadrao = $ptspad;
-
+    $status_tmp = new StatusQuiz();
     $gravou = FALSE;
     $reterros = '*';
 
     if ($id == '')
     {
+        //1 eh o id do status `novo`
+        $status_tmp->SelecionarStatus(1);
+        $quiz->Status = $status_tmp->Id;
         $gravou = $quiz->Incluir($reterros);
     }
     else
     {
         $quiz->Id = $id;
+        
+        //2 eh o id do status `em teste`
+        $status_tmp->SelecionarStatus(2);
+        $quiz->Status = $status_tmp->Id;
         $gravou = $quiz->Alterar();
     }
+    $myobj->resposta = 0;
     if ($gravou)
     {
-        $quiz_status_nome = $quiz->Status->Nome;
-        $quiz_status_val = $quiz->Status->Valor;
+        //$quizzes_cliente =  new QuizCliente();
+        if (QuizCliente::ListarBusca('',$quiz->Id, $cliente))
+        {
+            echo("Ja existe");
+        }
+        else
+        {
+            $quizzes_cliente =  new QuizCliente();
+            $quizzes_cliente->QuizId = $quiz->Id;
+            $quizzes_cliente->ClienteId = $cliente;
+            $reterros2 = '';
+            $gravou_quiz_cliente = $quizzes_cliente->Incluir($reterros2);
+            if($gravou_quiz_cliente)
+            {
+                //echo("gravado com sucesso");
+            }
+            else{
+                echo("Erro: $reterros2");
+            }
+        }
+               
         $myobj->resposta = 200;
         $myobj->id = "$quiz->Id";
-        $myobj->status = "$quiz_status_nome";
-        $myobj->valor = $quiz_status_val;
+        $myobj->status = "$status_tmp->Nome";
+        $myobj->valor = $status_tmp->Valor;
         /*
         $retorno    = "{ \"resposta\": 200, " .
             "\"id\": \"$quiz->Id\", " .
             "\"status\": \"$quiz_status_nome\", " .
             "\"valor\": $quiz_status_val }";
-            */
+        */
         $retorno = json_encode($myobj);
         
     }
     else
     {
-        
+        $myobj->resposta = 400;
+        $myobj->erros = $reterros;
+        /*
         $retorno    = "{ \"resposta\": 400, " .
             "\"erros\": [ ".
             "{ \"erro\": \"$reterros\" }] }";
+            */
     }
-    
+    $retorno = json_encode($myobj);
+
 }
 else
 {

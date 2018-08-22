@@ -1,5 +1,8 @@
 <?php
 require('ui/basicvars.php');
+if (isset($_POST['quiz']))          $quiz_id          = $_POST['quiz'];           else $quiz_id         = '';
+if (isset($_POST['cliente']))      $cliente_id       = $_POST['cliente'];       else $cliente_id      = '';
+
 
 $titulo         .= ' [Quizzes]';
 $csspersons     = array('geral.css');
@@ -10,7 +13,7 @@ $clientes = new Cliente();
 $clientesarr = $clientes->ListarBusca('','','');
 
 $quizzes = new Quiz();
-$quizzesarr = $quizzes->Listar();
+$quizzesarr = $quizzes->Listar($cliente_id);
 
 ?>
 <div class="conteudo">
@@ -23,8 +26,8 @@ $quizzesarr = $quizzes->Listar();
         <div class="col-md-2">
             <div class="form-inline">
                 <div class="form-group">
-                    <label for="clientes">Cliente:</label>
-                    <select id="clientes" name="clientes" class="form-control">
+                    <label for="cliente">Cliente:</label>
+                    <select id="cliente" name="cliente" class="form-control">
                         <option>--- Todos os quizzes ---</option>
                        <?php
                        foreach ($clientesarr as $client)
@@ -59,14 +62,33 @@ $quizzesarr = $quizzes->Listar();
             </tr>
         </thead>
         <tbody>
-            <!--
-            <tr>
+           <?php
+           
+            if(count($clientesarr)==0 )
+            {
+                echo('<tr>
                 <td colspan="4" class="text-center">
                     Ainda não há nenhum quiz cadastrado
                 </td>
-            </tr>
-            -->
-            <
+            </tr>');
+            }
+            else{
+                foreach ($quizzesarr as $quiz)
+                {
+                    echo("<tr>");
+                    echo("<td > $quiz->Nome </td >");
+                    echo("<td > $quiz->Cliente </td >");
+                    echo("<td > $quiz->Status </td >");
+                    echo("<td >");
+                    echo("<a href='quiz.php?quiz_id=$quiz->Id'>");
+                    echo("<i class='material-icons'>create</i>");
+                    echo("</a>");
+                    echo("<i class='material-icons'>delete</i>");
+                    echo("</td >");
+                }
+            }
+            ?>
+            
         </tbody>
     </table>
 </div>

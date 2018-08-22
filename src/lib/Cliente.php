@@ -46,4 +46,27 @@ class Cliente
         $sql    .=  "$where $campo $operador '$valor' ";
         $where  =   'AND ';
     }
+
+    function Selecionar($cliente_id)
+    {
+        
+        $sql        =   'SELECT   cliente_id, cliente_nome, cliente_empresa, cliente_setor, cliente_ativo ' .
+                        "FROM     clientes WHERE cliente_id =  '$cliente_id'";
+
+        $bd         = new BancoDados();
+        $resultado  = $bd->selecionar($sql);
+
+        if ($resultado != null)
+        {
+           $registro = $resultado->fetch_object();
+        
+            $this->Id         = $registro->cliente_id;
+            $this->Nome       = $registro->cliente_nome;
+            $this->Empresa    = $registro->cliente_empresa;
+            $this->Setor      = $registro->cliente_setor;
+            $this->Ativo      = $registro->cliente_ativo;
+        }
+        
+        return $lista;
+    }
 }

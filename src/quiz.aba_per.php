@@ -27,37 +27,42 @@
                 </div>
             </div>
             <br />
-            <form>
+            <form id="formpergunta" method="post" enctype="multipart/form-data">
+                <input type="hidden" id="quiz_id" name="quiz_id" 
+                <?php if ($quiz!=NULL) echo("value='$quiz->Id'");?>
+                />
                 <div class="form-group row">
                     <div class="col-3">
                         <label for="pergcodigo">Id</label>
-                        <input type="password" class="form-control sm-2" id="pergcodigo" nome="pergcodigo" placeholder="PERGUNTA NOVA" readonly="readonly" />
+                        <input type="texto" class="form-control sm-2" id="pergcodigo" name="pergcodigo" placeholder="PERGUNTA NOVA" readonly="readonly" />
                     </div>
                 </div>
+                <!--
                 <div class="form-group row">
                     <div class="col-3">
                         <label for="tipoperg">Tipo de Enunciado</label>
                         <br />
                         <div id="tipopergsel" class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-secondary active">
-                                <input type="radio" name="options" id="texto" name="tipoperg" autocomplete="off" checked /> Texto
+                                <input type="radio" id="texto" name="tipoperg" autocomplete="off" checked /> Texto
                             </label>
                             <label class="btn btn-secondary">
-                                <input type="radio" name="options" id="imagem" name="tipoperg" autocomplete="off" /> Imagem
+                                <input type="radio" id="imagem" name="tipoperg" autocomplete="off" /> Imagem
                             </label>
                         </div>
                     </div>
                 </div>
+                -->
                 <div id="divenuntexto" class="form-group row">
                     <div class="col-10">
                         <label for="enunciadotexto">Enunciado</label>
-                        <textarea class="form-control" id="enunciadotexto" nome="enunciadotexto"></textarea>
+                        <textarea class="form-control" id="enunciadotexto" name="enunciadotexto"></textarea>
                     </div>
                 </div>
                 <div id="divenunimagem" class="form-group row" style="display: none">
                     <div class="col-5">
                         <label for="enunciadoimagem">Enunciado</label>
-                        <input type="file" class="form-control" id="enunciadoimagem" nome="enunciadoimagem" />
+                        <input type="file" class="form-control" id="enunciadoimagem" name="enunciadoimagem" />
                     </div>
                     <div class="col-5">
                         <img src="" alt="Imagem" />
@@ -69,19 +74,19 @@
                         <br />
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-secondary active">
-                                <input type="radio" name="options" id="d1" name="dificuldade" autocomplete="off" checked /> 1 (Fácil)
+                                <input type="radio" id="d1" name="dificuldade" autocomplete="off" value="1" checked /> 1 (Fácil)
                             </label>
                             <label class="btn btn-secondary">
-                                <input type="radio" name="options" id="d2" name="dificuldade" autocomplete="off" /> 2
+                                <input type="radio" id="d2" name="dificuldade" autocomplete="off" value="2" /> 2
                             </label>
                             <label class="btn btn-secondary">
-                                <input type="radio" name="options" id="d3" name="dificuldade" autocomplete="off" /> 3
+                                <input type="radio" id="d3" name="dificuldade" autocomplete="off" value="3" /> 3
                             </label>
                             <label class="btn btn-secondary">
-                                <input type="radio" name="options" id="d4" name="dificuldade" autocomplete="off" /> 4
+                                <input type="radio" id="d4" name="dificuldade" autocomplete="off" value="4" /> 4
                             </label>
                             <label class="btn btn-secondary">
-                                <input type="radio" name="options" id="d5" name="dificuldade" autocomplete="off" /> 5 (Difícil)
+                                <input type="radio" id="d5" name="dificuldade" autocomplete="off" value="5" /> 5 (Difícil)
                             </label>
                         </div>
                     </div>
@@ -91,10 +96,10 @@
                         <label for="resprandom">As Respostas Desta Pergunta</label>
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-secondary active">
-                                <input type="radio" name="options" id="raleatoria" name="resprandom" autocomplete="off" checked /> São Aleatórias
+                                <input type="radio" id="raleatoria" name="resprandom" autocomplete="off" value="1" checked /> São Aleatórias
                             </label>
                             <label class="btn btn-secondary">
-                                <input type="radio" name="options" id="rsequencial" name="resprandom" autocomplete="off" /> São Sequenciais
+                                <input type="radio" id="rsequencial" name="resprandom" autocomplete="off" value="0" /> São Sequenciais
                             </label>
                         </div>
                     </div>
@@ -102,13 +107,13 @@
                 <div class="form-group row">
                     <div class="col-2">
                         <label for="sequencia">Sequência</label>
-                        <input type="number" class="form-control" id="sequencia" nome="sequencia" min="1" max="99" value="1" />
+                        <input type="number" class="form-control" id="sequencia" name="sequencia" min="1" max="99" value="1" />
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-2">
                         <label for="pontos">Pontuação Desta Pergunta</label>
-                        <input type="number" class="form-control" id="pontos" nome="pontos" min="0" max="999999" value="0" />
+                        <input type="number" class="form-control" id="pontos" name="pontos" min="0" max="999999" value="0" />
                     </div>
                 </div>
                 <div class="form-group row">
@@ -117,10 +122,10 @@
                         <br />
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-success">
-                                <input type="radio" name="options" id="pergativa" name="pergativa" autocomplete="off" checked /> Sim
+                                <input type="radio" id="pergativa_true" name="pergativa" autocomplete="off" value="1" checked /> Sim
                             </label>
                             <label class="btn btn-danger active">
-                                <input type="radio" name="options" id="pergdesativa" name="pergativa" autocomplete="off" /> Não
+                                <input type="radio" id="pergativa_false" name="pergativa" autocomplete="off" value="0" /> Não
                             </label>
                         </div>
                     </div>
@@ -129,11 +134,11 @@
                     <div class="col-5">
                         <label for="tiposrespostas">Tipo das Respostas</label>
                         <select id="tiposrespostas" name="tiposrespostas" class="form-control">
-                            <option>--- Todos os tipos ---</option>
+                            
                             <?php
                             foreach ($tpresparr as $tpresp)
                             {
-                                echo("<option value=\"$tpresp->Id\">$tpresp->Nome</option>\n");
+                                echo("<option value=\"$tpresp->Id\">". utf8_encode($tpresp->Nome) . "</option>\n");
                             }
                             ?>
                         </select>
@@ -176,6 +181,7 @@
                     </tbody>
                 </table>
                 <hr />
-                <button type="button" class="btn btn-success">Salvar</button>
+                <button type="submit" class="btn btn-success">Salvar</button>
                 <button type="button" class="btn btn-warning">Cancelar</button>
             </form>
+    

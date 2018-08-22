@@ -24,6 +24,7 @@ $(document).ready(function() {
                         console.log(result_msg.id);
                         console.log(result_msg.status);
                         $("#codigo").val(result_msg.id);
+                        $("#quiz_id").val(result_msg.id);
                     }
                   /*
                     if(msg == 'ok'){
