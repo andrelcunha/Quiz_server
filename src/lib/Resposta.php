@@ -3,7 +3,6 @@ class Resposta
 {
     public $Id;
     public $Texto;
-    public $Peso;
     public $Correta;
     public $NivelProximidadeCorreta;
 
@@ -22,9 +21,9 @@ class Resposta
                    
             $sql    = 'INSERT INTO opcoesrespostas ' .
                     '(opresposta_id, pergunta_id, opresposta_texto, ' .
-                    'opresposta_peso, opresposta_correta, opresposta_nivelProximidadeCorreta) ' .
+                    'opresposta_correta, opresposta_nivelProximidadeCorreta) ' .
                     'VALUES ' .
-                    "('$id', '$this->Pergunta','$this->Texto', $this->Peso, $this->Correta, $this->NivelProximidadeCorreta)";
+                    "('$id', '$this->Pergunta','$this->Texto', $this->Correta, $this->NivelProximidadeCorreta)";
             
             //echo($sql);
             $this->Id   = $id;
@@ -45,10 +44,9 @@ class Resposta
         {
             
             $sql =  "UPDATE opcoesrespostas" .
-                    "SET opresposta_texto = '$this->Texto'" .
-                    ", opresposta_peso = $this->Peso" .
+                    " SET opresposta_texto = '$this->Texto'" .
                     ", opresposta_correta = $this->Correta" .
-                    ", opresposta_nivelProximidadeCorreta = . $this->NivelProximidadeCorreta" .
+                    ", opresposta_nivelProximidadeCorreta = $this->NivelProximidadeCorreta" .
                     " WHERE opresposta_id = '$this->Id'";
             
             $resultado  = $bd->executar($sql,$erros);
@@ -66,8 +64,11 @@ class Resposta
         $sql        =   'SELECT *  FROM opcoesrespostas ';
         $where      =   ' WHERE ';              
        
-        if ($pergunta_id != '') {$sql .= $where . "pergunta_id =  '$pergunta_id'";}      
-
+        if ($pergunta_id != '') 
+        {
+            $sql .= $where . "pergunta_id =  '$pergunta_id'";
+        }      
+        
         $bd         = new BancoDados();
         $resultado  = $bd->selecionar($sql);
         if ($resultado != null)
@@ -78,7 +79,6 @@ class Resposta
                 $objeto->Id                         = $registro->opresposta_id;
                 $objeto->Pergunta                   = $registro->pergunta_id;
                 $objeto->Texto                      = $registro->opresposta_texto;
-                $objeto->Peso                      = $registro->opresposta_peso;
                 $objeto->Correta                    = $registro->opresposta_correta;
                 $objeto->NivelProximidadeCorreta    = $registro->opresposta_nivelProximidadeCorreta;
                 $lista[] = $objeto;
