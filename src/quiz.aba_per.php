@@ -156,6 +156,8 @@
                 <button type="button" class="btn btn-warning">Cancelar</button>
             </form>
             <hr />
+            <div id="content"></div>
+            <!--
             <table class="table table-striped">
                     <thead class="thead-dark">
                         <tr>
@@ -189,6 +191,7 @@
                         </tr>
                     </tbody>
                 </table>
+            -->
 
             
     
