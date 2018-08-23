@@ -51,7 +51,7 @@ class Pergunta
         {
             
             $sql    = 'UPDATE perguntas ' .
-                    'SET pergunta_enunciado = ' . $this->Enunciado .
+                    'SET pergunta_enunciado = "' . $this->Enunciado .'"'.
                     ', tiporesposta_id = ' . $this->TipoResposta .
                     ', pergunta_dificuldade = ' . $this->Dificuldade .
                     ', pergunta_respostasrandom = "' .$this->RespostasRandom .'"'.
