@@ -1,16 +1,25 @@
 <?php
+/*array(6) {
+  ["pergunta_id"]=>
+  string(36) "31604841-a631-11e8-bbc6-0800270a6e32"
+  ["respcodigo"]=>
+  string(36) "8bd6dba9-a63e-11e8-bbc6-0800270a6e32"
+  ["enunciadotexto"]=>
+  string(6) "O gato"
+  ["peso"]=>
+  string(1) "1"
+  ["respcorreta"]=>
+  string(1) "1"
+  ["nivelproxcorreta"]=>
+  string(1) "2"
+}*/
+
 $erros  = array();
-if (isset($_POST['quiz_id']))        $quiz_id         = $_POST['quiz_id'];         else    $quiz_id         = '';
-if (isset($_POST['pergcodigo']))        $id         = $_POST['pergcodigo'];         else    $id         = '';
-//if (isset($_POST['tipoperg']))          $tipoperg       = $_POST['tipoperg'];           else    $erros[]    = '';
-if (isset($_POST['enunciadotexto']))    $enunciadotexto    = $_POST['enunciadotexto'];  else    $enunciadotexto    = '';
-//if (isset($_POST['enunciadoimagem']))   $enunciadoimagem    = $_POST['enunciadoimagem']; else   $enunciadoimagem    = '';
-if (isset($_POST['dificuldade']))       $dificuldade    = $_POST['dificuldade'];        else    $dificuldade    = 1;
-if (isset($_POST['resprandom']))        $resprandom    = $_POST['resprandom'];        else    $resprandom    = 'off';
-if (isset($_POST['sequencia']))         $sequencia = $_POST['sequencia'];     else    $sequencia = 1;
-if (isset($_POST['pontos']))            $pontos = $_POST['pontos'];     else    $pontos = 1;
-if (isset($_POST['pergativa']))         $pergativa = $_POST['pergativa'];     else    $pergativa = 'pergativa';
-if (isset($_POST['tiposrespostas']))    $tiposrespostas = $_POST['tiposrespostas'];     else    $tiposrespostas = 0;
+if (isset($_POST['pergunta_id']))       $pergunta_id         = $_POST['pergunta_id'];   else    $pergunta_id         = '';
+if (isset($_POST['respcodigo']))        $id         = $_POST['respcodigo'];             else    $id         = '';
+if (isset($_POST['resptexto']))         $resptexto    = $_POST['resptexto'];            else    $resptexto    = '';
+if (isset($_POST['respcorreta']))       $respcorreta    = $_POST['respcorreta'];        else    $respcorreta    = 0;
+if (isset($_POST['nivelproxcorreta']))  $nivelproxcorreta = $_POST['nivelproxcorreta']; else    $nivelproxcorreta = 0;
 
 
 require_once('autoload.php');
@@ -20,48 +29,35 @@ $retorno    = '';
 
 if (count($erros) == 0)
 {
-    $pergunta = new Pergunta();
-    $pergunta->Id = $id;
-    $pergunta->Quiz = $quiz_id;
-    $pergunta->Enunciado = $enunciadotexto;
-    $pergunta->TipoResposta = $tiposrespostas;
-    $pergunta->Dificuldade = $dificuldade;
-    $pergunta->RespostasRandom = $resprandom;
-    $pergunta->Sequencia = $sequencia;
-    $pergunta->Pontos = $pontos;
-    if ($pergativa == 0)
-        $pergunta->Cancelada = 1;
-    else
-        $pergunta->Cancelada = 0;
+    $resposta = new Resposta();
+    $resposta->Id = $id;
+    $resposta->Pergunta = $pergunta_id;
+    $resposta->Texto = $resptexto;
+    $resposta->Correta = $respcorreta;
+    $resposta->NivelProximidadeCorreta = $nivelproxcorreta;
     
     $gravou = FALSE;
     $reterros = '*';
 
     if ($id == '')
     {
-        $gravou = $pergunta->Incluir($reterros);
+        $gravou = $resposta->Incluir($reterros);
     }
     else
     {
-        $pergunta->Id = $id;
-        $gravou = $pergunta->Alterar();
+        $resposta->Id = $id;
+        $gravou = $resposta->Alterar($reterros);
     }
     $myobj->resposta = 0;
     if ($gravou)
     {
             
         $myobj->resposta = 200;
-        $myobj->pergcodigo = "$pergunta->Id";
-        //$myobj->tipoperg = $pergunta->
-        $myobj->enunciadotexto = "$pergunta->Enunciado";
-        //$myobj->enunciadoimagem = $pergunta->Enunciado
-        $myobj->dificuldade = $pergunta->Dificuldade;
-        $myobj->resprandom = "$pergunta->RespostasRandom";
-        $myobj->sequencia = $pergunta->Sequencia;
-        $myobj->pontos = $pergunta->Pontos;
-        $myobj->pergativa = !$pergunta->Cancelada;
-        $myobj->tiposrespostas = $pergunta->TipoResposta;
-        $myobj->codigo = "$pergunta->Quiz";
+        $myobj->respcodigo = "$resposta->Id";
+        $myobj->pergunta_id = "$resposta->Pergunta";
+        $myobj->resptexto = "$resposta->Texto";
+        $myobj->respcorreta = $resposta->Correta;
+        $myobj->nivelproxcorreta = $resposta->NivelProximidadeCorreta;
 
         $retorno = json_encode($myobj);
              
@@ -70,11 +66,7 @@ if (count($erros) == 0)
     {
         $myobj->resposta = 400;
         $myobj->erros = $reterros;
-        /*
-        $retorno    = "{ \"resposta\": 400, " .
-            "\"erros\": [ ".
-            "{ \"erro\": \"$reterros\" }] }";
-            */
+      
     }
     $retorno = json_encode($myobj);
 
