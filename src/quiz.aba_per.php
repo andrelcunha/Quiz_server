@@ -27,7 +27,7 @@
                 </div>
             </div>
             <br />
-            <form id="formpergunta" method="post" enctype="multipart/form-data">
+            <form id="formpergunta"  method="post" enctype="multipart/form-data">
                 <input type="hidden" id="quiz_id" name="quiz_id" 
                 <?php if ($quiz!=NULL) {echo("value='$quiz->Id'");}?>
                 />
@@ -151,7 +151,12 @@
                 <hr />
                 <h3>Respostas</h3>
                 <br />
-                <table class="table table-striped">
+                
+                <button type="button" class="btn btn-success" onclick="EnviarPergunta()">Salvar</button>
+                <button type="button" class="btn btn-warning">Cancelar</button>
+            </form>
+            <hr />
+            <table class="table table-striped">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">
@@ -184,8 +189,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <hr />
-                <button type="submit" class="btn btn-success">Salvar</button>
-                <button type="button" class="btn btn-warning">Cancelar</button>
-            </form>
+
+            
     
