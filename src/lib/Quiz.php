@@ -56,7 +56,7 @@ class Quiz
         }
     }
 
-    function Alterar(){
+    function Alterar(&$erros){
         $bd     = new BancoDados();
 
         if ($this->Id != '')
