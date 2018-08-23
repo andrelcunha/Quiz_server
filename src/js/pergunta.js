@@ -11,47 +11,66 @@ $(document).ready(function() {
             $("#divenuntexto").hide();
         }
     });
-
-    $("#formpergunta").on("submit", function(event) {
-        if (true)
-        {
-            event.preventDefault();
-
-            $.ajax({
-                type: "POST",
-                url: "exec/gravarPergunta.php",
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData:false,
-                beforeSend: function() {
-                    $('.submitBtn').attr("disabled", "disabled");
-                    $('#fupForm').css("opacity", ".5");
-                },
-                success: function(msg){
-                    //$('.statusMsg').html('');
-                    console.log(msg);
-                    var result_msg = JSON.parse(msg);
-                    if(result_msg.resposta == 200)
-                    {
-                        console.log(result_msg.pergcodigo);
-                        $("#pergcodigo").val(result_msg.pergcodigo);
-                    }
-                  /*
-                    if(msg == 'ok'){
-                        $('#fupForm')[0].reset();
-                        $('.statusMsg').html('<span style="font-size:18px;color:#34A853">Form data submitted successfully.</span>');
-                    }else{
-                        $('.statusMsg').html('<span style="font-size:18px;color:#EA4335">Some problem occurred, please try again.</span>');
-                    }
-                  
-                    */
-                   $('#fupForm').css("opacity","");
-                   $(".submitBtn").removeAttr("disabled");
-                }
-            });
-        }
-        event.preventDefault();
-
-    });
 });
+
+function EnviarPergunta()
+{
+    var id = $("#pergcodigo").val();
+    var quiz_id = $("#quiz_id").val();
+    var texto = $("#enunciadotexto").val();
+    var dificuldade = parseInt($('input:radio[name=dificuldade]:checked').val());
+    var resprandom = parseInt($('input:radio[name=resprandom]:checked').val());
+    var sequencia = parseInt($("#sequencia").val());
+    var pontos = parseInt($("#pontos").val());
+    var pergativa = parseInt($('input:radio[name=pergativa]:checked').val());
+    var tiposrespostas = parseInt($("#tiposrespostas").val());
+    
+    var json = {
+        id:id,
+        quiz_id:quiz_id,
+        texto:texto,
+        dificuldade:dificuldade,
+        resprandom:resprandom,
+        sequencia:sequencia,
+        pontos:pontos,
+        pergativa:pergativa,
+        tiposrespostas:tiposrespostas};
+    
+    $.post("exec/gravarPergunta.php",json,function(msg){
+            var result_msg = JSON.parse(msg);
+            if(result_msg.resposta === 200)
+            {
+                console.log(result_msg.pergcodigo);
+                $("#pergcodigo").val(result_msg.pergcodigo);
+                $("#pergunta_id").val(result_msg.pergcodigo);
+
+            }
+            resp = result_msg.resposta;
+            console.log(resp);
+            MostraModalResposta();
+        });
+}
+
+function MostraModalResposta(){
+     $("#").modal();
+}
+
+function ResetFormPergunta()
+{
+ //TODO -  adequar ao form Perguntas
+    $( "label.active" ).removeClass( "active" );
+
+    $("#formresposta")[0].reset();
+    //$("#pergunta_id").val("");
+    $("#respcodigo").val("");
+    $("#resptexto").val("");
+    $("#peso").val(0);
+
+    $("#correta_false").attr( "checked", true );
+    var label = $("#correta_false").parent();
+    label.addClass('active');
+
+    $("#n1").attr("checked", true);
+    label = $("#n1").parent();
+    label.addClass('active');
+}
