@@ -2,7 +2,7 @@
             <div class="w-100">
                 <div class="btn-toolbar" role="toolbar">
                     <div class="btn-group mr-2" role="group">
-                        <button type="button" class="btn btn-primary">Nova</button>
+                        <button type="button" class="btn btn-primary"onclick="ResetFormResposta()">Nova</button>
                     </div>
                     <div class="btn-group mr-2" role="group">
                         <button type="button" class="btn btn-info">
@@ -41,37 +41,39 @@
                 </div>
                 <div id="divresptexto" class="form-group row">
                     <div class="col-10">
-                        <label for="enunciadotexto">Texto</label>
-                        <textarea class="form-control" id="enunciadotexto" name="enunciadotexto"><?php if($resposta!=NULL){echo($resposta->Texto);}?></textarea>
+                        <label for="resptexto">Texto</label>
+                        <textarea class="form-control" id="resptexto" name="resptexto"><?php if($resposta!=NULL){echo($resposta->Texto);}?></textarea>
                     </div>
                 </div>
+                <!--
                 <div class="form-group row">
                     <div class="col-2">
                         <label for="peso">Peso</label>
                         <input type="number" class="form-control" id="peso" name="peso" min="1" max="99"  
                         <?php 
-                        if ($resposta!=NULL){echo("value=$resposta->Peso");}
-                        else {echo("value=0");}
+                        //if ($resposta!=NULL){echo("value=$resposta->Peso");}
+                        //else {echo("value=0");}
                         ?>
                         />
                     </div>
                 </div>
+                -->
                 <div class="form-group row">
                     <div class="col-3">
                         <label for="respcorreta">Correta</label>
                         <br />
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-success active">
-                                <input type="radio" name="options" id="correta_true" name="respcorreta" autocomplete="off" value="1" 
+                                <input type="radio" id="correta_true" name="respcorreta" autocomplete="off" value="1" 
                                 <?php  if ($resposta->Correta) {echo(" checked=\"checked\" ");}?>                                
                                 /> Sim
                             </label>
                             <label class="btn btn-danger active">
-                                <input type="radio" name="options" id="correta_false" name="respcorreta" autocomplete="off" value="0" 
+                                <input type="radio" id="correta_false" name="respcorreta" autocomplete="off" value="0" 
                                 <?php  if (!$resposta->Correta) {echo(" checked=\"checked\" ");}?>                                
                                 /> Não
                             </label>
-                        </div>
+                        </div>      
                     </div>
                 </div>
                 <div class="form-group row">
@@ -80,19 +82,29 @@
                         <br />
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-secondary active">
-                                <input type="radio" id="n1" name="nivelproxcorreta" autocomplete="off" value="1" checked /> 1 (Fácil)
+                                <input type="radio" id="n1" name="nivelproxcorreta" autocomplete="off" value="1"
+                                <?php  if ($resposta->NivelProximidadeCorreta == 1) {echo(" checked=\"checked\" ");}?>                                
+                                /> 1 (Fácil)
                             </label>
                             <label class="btn btn-secondary">
-                                <input type="radio" id="n2" name="nivelproxcorreta" autocomplete="off" value="2" /> 2
+                                <input type="radio" id="n2" name="nivelproxcorreta" autocomplete="off" value="2" 
+                                <?php  if ($resposta->NivelProximidadeCorreta == 2) {echo(" checked=\"checked\" ");}?>                                
+                                /> 2
                             </label>
                             <label class="btn btn-secondary">
-                                <input type="radio" id="n3" name="nivelproxcorreta" autocomplete="off" value="3" /> 3
+                                <input type="radio" id="n3" name="nivelproxcorreta" autocomplete="off" value="3" 
+                                <?php  if ($resposta->NivelProximidadeCorreta == 3) {echo(" checked=\"checked\" ");}?>                                
+                                /> 3
                             </label>
                             <label class="btn btn-secondary">
-                                <input type="radio" id="n4" name="nivelproxcorreta" autocomplete="off" value="4" /> 4
+                                <input type="radio" id="n4" name="nivelproxcorreta" autocomplete="off" value="4" 
+                                <?php  if ($resposta->NivelProximidadeCorreta == 4 ) {echo(" checked=\"checked\" ");}?>                                
+                                /> 4
                             </label>
                             <label class="btn btn-secondary">
-                                <input type="radio" id="n5" name="nivelproxcorreta" autocomplete="off" value="5" /> 5 (Difícil)
+                                <input type="radio" id="n5" name="nivelproxcorreta" autocomplete="off" value="5" 
+                                <?php  if ($resposta->NivelProximidadeCorreta == 5) {echo(" checked=\"checked\" ");}?>                                
+                                /> 5 (Difícil)
                             </label>
                         </div>
                     </div>
