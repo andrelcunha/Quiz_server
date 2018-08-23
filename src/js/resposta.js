@@ -85,57 +85,54 @@ function EnviarResposta()
    });
 }
 
-function buscarRespostas(){
-    $.getJSON("buscarRespostas.php",function (result){
-        jarr=result;
-        var table = create_table(jarr);
-        content.html(table);
+function buscarRespostas(pergunta_id){
+    var json = {id:pergunta_id};
+    $.post("exec/buscarRespostas.php",json,function (result){
+        var jarr=JSON.parse(result);
+        var table = gerarTabelaRespostas(jarr);
+        //content.html(table);
+        $("#content").html(table);
+
     });
 }
 
 function gerarTabelaRespostas(jarr){
-    
-    /*
-else
-{
-    $html   .=              '<tr>' .
-                                '<td colspan="4">Não foram encontrados clientes com os parâmetros informados</td>' .
-                            '</tr>';
-}
+    var myTable="";
+    myTable = "<table id=\"table_respostas\" class=\"table table-striped\">";
+    myTable+= "<thead class=\"thead-dark\">";
+    myTable+= "<tr>";
+    myTable+= "<th scope=\"col\">Texto</th>";
+    myTable+= "<th scope=\"col\">Correta</th>";
+    myTable+= "<th scope=\"col\">Proximidade Correta</th>";
+    myTable+= "<th scope=\"col\">Opções</th>";
+    myTable+= "</tr></thead>";
+    myTable+= "<tbody>";
+    if (jarr.length===0)
+    {
 
-$html       .=      '</tbody>' .
-                '</table>';
+        myTable+= "<tr>";
+        myTable+= "<td colspan=\"4\">Não foram encontrados clientes com os parâmetros informados</td>";
+        myTable+= "</tr></tbody></table>";
+        return  myTable;
 
-echo($html);
- */
-var myTable="";
-myTable = "<table id=\"table_respostas\" class=\"table table-striped\">";
-myTable+= "<thead class=\"thead-dark\">";
-myTable+= "<tr";
-myTable+= "<th scope=\"col\">Texto</th>";
-myTable+= "<th scope=\"col\">Correta</th>";
-myTable+= "<th scope=\"col\">Proximidade Correta</th>";
-myTable+= "<th scope=\"col\">Opções</th>";
-myTable+= "</tr></thead>";
-myTable+="<tbody>";
-if (count(jarr)==0)
-for (var resp in jarr)
-{
-    myTable+="<tr id=>";
-    myTable+="<td>"+resp.Texto+"</td>";
-    myTable+="<td>"+resp.Correta+"</td>";
-    myTable+="<td>"+resp.NivelProximidadeCorreta+"</td>";
-    
-    myTable+="</tr>";
-}
-    myTable+="</tbody></table>";
-    return myTable;
+    }
+    for (var i in jarr)
+    {
+        myTable+="<tr id=\""+jarr[i].Id+"\">";
+        myTable+="<td>"+jarr[i].Texto+"</td>";
+        myTable+="<td>"+jarr[i].Correta+"</td>";
+        myTable+="<td>"+jarr[i].NivelProximidadeCorreta+"</td>";
+        myTable+=criarCelulaOpcoes(jarr[i].Id);
+        myTable+="</tr>";
+    }
+        myTable+="</tbody></table>";
+        return myTable;
 }
 
 function criarCelulaOpcoes(id){
     var html = "";
     html += "<td >";
-    html += "<a href='javascript:void(0);' onclick='editRowRespsposta(id)'>";
+    html += "<a href='javascript:void(0);' onclick='editRowRespsposta(\""+id+"\")'>";
     html += "<i class='material-icons'>create</i></a>";
     html += "<a href='#'>";
     html += "<i class='material-icons'>delete</i></a>";
