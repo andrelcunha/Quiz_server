@@ -29,12 +29,14 @@
             <br />
             <form id="formpergunta" method="post" enctype="multipart/form-data">
                 <input type="hidden" id="quiz_id" name="quiz_id" 
-                <?php if ($quiz!=NULL) echo("value='$quiz->Id'");?>
+                <?php if ($quiz!=NULL) {echo("value='$quiz->Id'");}?>
                 />
                 <div class="form-group row">
                     <div class="col-3">
                         <label for="pergcodigo">Id</label>
-                        <input type="texto" class="form-control sm-2" id="pergcodigo" name="pergcodigo" placeholder="PERGUNTA NOVA" readonly="readonly" />
+                        <input type="texto" class="form-control sm-2" id="pergcodigo" name="pergcodigo" placeholder="PERGUNTA NOVA" readonly="readonly" 
+                        <?php if ($pergunta!=NULL) {echo("value='$pergunta->Id'");}?>
+                        />
                     </div>
                 </div>
                 <!--
@@ -77,17 +79,19 @@
                                 <input type="radio" id="d1" name="dificuldade" autocomplete="off" value="1" checked /> 1 (Fácil)
                             </label>
                             <label class="btn btn-secondary">
-                                <input type="radio" id="d2" name="dificuldade" autocomplete="off" value="2" /> 2
+                                <input type="radio" id="d2" name="dificuldade" autocomplete="off" value="2" /> 2 (Médio)
                             </label>
                             <label class="btn btn-secondary">
-                                <input type="radio" id="d3" name="dificuldade" autocomplete="off" value="3" /> 3
+                                <input type="radio" id="d3" name="dificuldade" autocomplete="off" value="3" /> 3 (Difícil)
                             </label>
+                            <!--
                             <label class="btn btn-secondary">
                                 <input type="radio" id="d4" name="dificuldade" autocomplete="off" value="4" /> 4
                             </label>
                             <label class="btn btn-secondary">
                                 <input type="radio" id="d5" name="dificuldade" autocomplete="off" value="5" /> 5 (Difícil)
                             </label>
+                            -->
                         </div>
                     </div>
                 </div>
