@@ -63,12 +63,12 @@
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-success active">
                                 <input type="radio" name="options" id="correta_true" name="respcorreta" autocomplete="off" value="1" 
-                                <?php  if ($resposta->$Correta) {echo(" checked ");}?>                                
+                                <?php  if ($resposta->Correta) {echo(" checked=\"checked\" ");}?>                                
                                 /> Sim
                             </label>
                             <label class="btn btn-danger active">
                                 <input type="radio" name="options" id="correta_false" name="respcorreta" autocomplete="off" value="0" 
-                                <?php  if (!$resposta->$Correta) {echo(" checked ");}?>                                
+                                <?php  if (!$resposta->Correta) {echo(" checked=\"checked\" ");}?>                                
                                 /> Não
                             </label>
                         </div>
