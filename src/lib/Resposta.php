@@ -68,7 +68,6 @@ class Resposta
         {
             $sql .= $where . "pergunta_id =  '$pergunta_id'";
         }      
-        
         $bd         = new BancoDados();
         $resultado  = $bd->selecionar($sql);
         if ($resultado != null)
