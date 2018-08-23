@@ -44,7 +44,7 @@ if (count($erros) == 0)
     else
     {
         $pergunta->Id = $id;
-        $gravou = $pergunta->Alterar();
+        $gravou = $pergunta->Alterar($reterros);
     }
     $myobj->resposta = 0;
     if ($gravou)
