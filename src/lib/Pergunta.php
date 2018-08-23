@@ -41,17 +41,24 @@ class Pergunta
         }
     }
 
-    function Alterar(){
+    function Alterar(&$erros){
         
         $bd     = new BancoDados();
 
         //$id     = $this->Id;
 
-        if ($id != '')
+        if ($this->Id != '')
         {
             
-            
-            $sql    = '' ;
+            $sql    = 'UPDATE perguntas ' .
+                    'SET pergunta_enunciado = ' . $this->Enunciado .
+                    ', tiporesposta_id = ' . $this->TipoResposta .
+                    ', pergunta_dificuldade = ' . $this->Dificuldade .
+                    ', pergunta_respostasrandom = "' .$this->RespostasRandom .'"'.
+                    ', pergunta_sequencia = "' . $this->Sequencia .'"'.
+                    ', pergunta_pontos = ' . $this->Pontos .
+                    ', pergunta_cancelada = ' . $this->Cancelada .                    
+                    ' WHERE quiz_id = "'.  $this->Id .'"' ;
 
             $resultado  = $bd->executar($sql,$erros);
             return $resultado;
@@ -62,10 +69,10 @@ class Pergunta
         }
     }
 
-    static function Listar($pergunta_id, $quiz_id)
+    static function Listar($quiz_id)
     {
+        
         $lista      = array();
-
         $sql        =   'SELECT   pergunta_id, '.
                         'quiz_id, ' .
                         'pergunta_enunciado,' . 
@@ -77,71 +84,43 @@ class Pergunta
                         'pergunta_cancelada ' .
                         'FROM perguntas ';
 
-        $where      =   'WHERE ';
-
-        if ($pergunta_id != '')  Pergunta::PrepararWhere($sql, $where, 'pergunta_id', 'LIKE', $pergunta_id,    's');
-        if ($quiz_id != '')      Pergunta::PrepararWhere($sql, $where, 'quiz_id',     'LIKE', $quiz_id,        's');
-        
+        $where      =   ' WHERE ';              
+       
+        if ($quiz_id != '')  
+        {
+            $sql .= $where . "quiz_id =  '$quiz_id'";
+        }      
 
         $bd         = new BancoDados();
         $resultado  = $bd->selecionar($sql);
-
         if ($resultado != null)
         {
             while ($registro = $resultado->fetch_object())
             {
-                $objeto             = new Pergunta();
-                $objeto->Id         = $registro->cliente_id;
-                $objeto->Quiz         = $registro->quiz_id;
-                $objeto->Enunciado       = $registro->pergunta_enunciado;
-                $objeto->TipoResposta    = $registro->tiporesposta_id;
-                $objeto->Dificuldade      = $registro->pergunta_dificuldade;
-                $objeto->RespostasRandom      = $registro->pergunta_respostasrandom;
-                $objeto->Sequencia      = $registro->pergunta_sequencia;
-                $objeto->Pontos      = $registro->pergunta_pontos;
-                $objeto->Cancelada      = $registro->pergunta_cancelada;
-
-                $lista[]            = $objeto;
+                $objeto                     = new Pergunta();
+                $objeto->Id                 = $registro->pergunta_id;
+                $objeto->Quiz               = $registro->quiz_id;
+                $objeto->Enunciado          = $registro->pergunta_enunciado;
+                $objeto->TipoResposta       = $registro->tiporesposta_id;
+                $objeto->Dificuldade        = $registro->pergunta_dificuldade;
+                $objeto->RespostasRandom    = $registro->pergunta_respostasrandom;
+                $objeto->Sequencia          = $registro->pergunta_sequencia;
+                $objeto->Pontos             = $registro->pergunta_pontos;
+                $objeto->Cancelada          = $registro->pergunta_cancelada;
+                $lista[]                    = $objeto;
             }
         }
-        
-        return $lista;
-                
+        return $lista;       
     }
 
     static function Deletar($pergunta_id)
     {
-        $lista      = array();
 
-        $sql        =   'DELETE FROM perguntas ';
-
-        $where      =   "WHERE pergunta_id = '$pergunta_id'";
-        $sql .= $where;
-
+        $sql        =   "DELETE FROM perguntas WHERE pergunta_id = '$pergunta_id'";
         $bd         = new BancoDados();
         $resultado  = $bd->selecionar($sql);
-
-        if ($resultado != null)
-        {
-            while ($registro = $resultado->fetch_object())
-            {
-                $objeto             = new Pergunta();
-                $objeto->Id         = $registro->cliente_id;
-                $objeto->Quiz         = $registro->quiz_id;
-                $objeto->Enunciado       = $registro->pergunta_enunciado;
-                $objeto->TipoResposta    = $registro->tiporesposta_id;
-                $objeto->Dificuldade      = $registro->pergunta_dificuldade;
-                $objeto->RespostasRandom      = $registro->pergunta_respostasrandom;
-                $objeto->Sequencia      = $registro->pergunta_sequencia;
-                $objeto->Pontos      = $registro->pergunta_pontos;
-                $objeto->Cancelada      = $registro->pergunta_cancelada;
-
-                $lista[]            = $objeto;
-            }
-        }
         
-        return $lista;
-                
+        return $resultado;
     }
 
 
