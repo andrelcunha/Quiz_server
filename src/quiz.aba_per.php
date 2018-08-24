@@ -148,50 +148,14 @@
                         </select>
                     </div>
                 </div>
-                <hr />
-                <h3>Respostas</h3>
-                <br />
+           
                 
                 <button type="button" class="btn btn-success" onclick="EnviarPergunta()">Salvar</button>
                 <button type="button" class="btn btn-warning">Cancelar</button>
             </form>
-            <hr />
+            <br />
             <div id="content"></div>
-            <!--
-            <table class="table table-striped">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">
-                                Id
-                            </th>
-                            <th scope="col">
-                                Texto
-                            </th>
-                            <th scope="col">
-                                Peso
-                            </th>
-                            <th scope="col">
-                                Correta
-                            </th>
-                            <th scope="col">
-                                Proximidade Correta
-                            </th>
-                            <th scope="col">
-                                Opções
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="6">
-                                <button id="novaresposta" class="btn btn-link">
-                                    <i class="material-icons">add_circle</i> Nova Opção
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            -->
+           
 
             
     
