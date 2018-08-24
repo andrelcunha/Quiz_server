@@ -47,12 +47,9 @@ function EnviarPergunta()
             }
             resp = result_msg.resposta;
             console.log(resp);
-            MostraModalResposta();
+            mostrarTabelaResposta();
+            buscarRespostas(result_msg.pergcodigo);
         });
-}
-
-function MostraModalResposta(){
-     $("#").modal();
 }
 
 function ResetFormPergunta()
