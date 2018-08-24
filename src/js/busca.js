@@ -5,7 +5,7 @@ $(document).ready(function() {
         var classe = this.id.replace('cmdBuscar', '');
         classechamadora = classe;
 
-        var dados = {}
+        var dados = {};
 
         $('#corpo' + classe).find('input[id^="campo"]').each(function() {
             var cclasse = this.id.replace('campo', '');
