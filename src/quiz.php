@@ -56,12 +56,13 @@ if (isset($_GET['quiz_id']))
         </div>
         <!--
         <div class="tab-pane fade" id="nav-usuarios" role="tabpanel" aria-labelledby="nav-usuarios-tab">xxx</div>
-        -->
+        
         <div class="tab-pane fade" id="nav-respostas" role="tabpanel" aria-labelledby="nav-respostas-tab">
             <?php
-            require('quiz.aba_resp.php');
+           // require('quiz.aba_resp.php');
             ?>
         </div>
+        -->
     </div>
 </div>
 <?php
