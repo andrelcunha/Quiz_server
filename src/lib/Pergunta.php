@@ -29,8 +29,6 @@ class Pergunta
                     'VALUES ' .
                     "('$id', '$this->Quiz','$this->Enunciado', $this->TipoResposta, $this->Dificuldade," .
                     " $this->RespostasRandom, $this->Sequencia, $this->Pontos, $this->Cancelada)";
-            
-            //echo($sql);
             $this->Id   = $id;
             $resultado  = $bd->executar($sql,$erros);
             return $resultado;
@@ -45,8 +43,6 @@ class Pergunta
         
         $bd     = new BancoDados();
 
-        //$id     = $this->Id;
-
         if ($this->Id != '')
         {
             
@@ -58,7 +54,7 @@ class Pergunta
                     ', pergunta_sequencia = "' . $this->Sequencia .'"'.
                     ', pergunta_pontos = ' . $this->Pontos .
                     ', pergunta_cancelada = ' . $this->Cancelada .                    
-                    ' WHERE quiz_id = "'.  $this->Id .'"' ;
+                    ' WHERE pergunta_id = "'.  $this->Id .'"' ;
 
             $resultado  = $bd->executar($sql,$erros);
             return $resultado;
