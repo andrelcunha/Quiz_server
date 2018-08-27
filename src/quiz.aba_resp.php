@@ -2,7 +2,7 @@
             <div class="w-100">
                 <div class="btn-toolbar" role="toolbar">
                     <div class="btn-group mr-2" role="group">
-                        <button type="button" class="btn btn-primary"onclick="ResetFormResposta()">Nova</button>
+                        <button type="button" class="btn btn-primary" onclick="ResetFormResposta()">Nova</button>
                     </div>
                     <div class="btn-group mr-2" role="group">
                         <button type="button" class="btn btn-info">
