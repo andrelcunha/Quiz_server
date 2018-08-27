@@ -3,10 +3,11 @@
 	header('Access-Control-Allow-Origin: *');
 	header('Content-Type: application/json');
 
-	include_once '../../config/Database.php';
-	include_once '../../models/Player.php';
+	require_once('../constantes.php');
+	require_once('../config/DatabaseREST.php');
+	require_once('../lib/Player.php');
 
-	$database = new Database();
+	$database = new DatabaseREST();
 	$db = $database->connect();
 
 	$player = new player($db);

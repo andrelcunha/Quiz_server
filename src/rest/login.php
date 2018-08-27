@@ -5,10 +5,11 @@
 	header('Access-Control-Allow-Methods: POST');
 	header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
-	include_once '../../config/Database.php';
-	include_once '../../models/Player.php';
+	require_once('../constantes.php');
+	require_once('../config/DatabaseREST.php');
+	require_once('../lib/Player.php');
 
-	$database = new Database();
+	$database = new DatabaseREST();
 	$db = $database->connect();
 
 	//$player = new Player($db);

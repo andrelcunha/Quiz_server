@@ -1,5 +1,6 @@
 <?php
-require('ui/basicvars.php');
+require_once('../constantes.php');
+require_once('autoload.php');
 
 $quiz = new Quiz();
 $quiz = $quiz->Selecionar('1a7e6271-a631-11e8-bbc6-0800270a6e32');
